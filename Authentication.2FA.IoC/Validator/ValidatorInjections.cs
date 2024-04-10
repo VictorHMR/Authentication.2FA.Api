@@ -12,6 +12,7 @@ namespace Authentication._2FA.IoC.Validator
         {
             services.AddScoped<IValidator<CreateUserRequestDTO>, CreateUserValidations>();
             services.AddScoped<IValidator<UserSigninRequestDTO>,UserSigninValidations>();
+            services.AddScoped<IValidator<GenerateConfirmationQRRequestDTO>,GenerateConfirmationQRValidations>();
 
 
             return services;

@@ -46,12 +46,12 @@ namespace Authentication._2FA.Api.Controllers
             }
         }
 
-        [HttpGet("GenerateConfirmationQR")]
-        public async Task<IActionResult> GenerateConfirmationQR([FromQuery]int id)
+        [HttpPost("GenerateConfirmationQR")]
+        public async Task<IActionResult> GenerateConfirmationQR([FromForm] GenerateConfirmationQRRequestDTO request)
         {
             try
             {
-                var response = await _GenerateConfirmationQR.Execute(id);
+                var response = await _GenerateConfirmationQR.Execute(request);
                 return _ActionResultConverter.Convert(response);
             }
             catch (Exception ex)

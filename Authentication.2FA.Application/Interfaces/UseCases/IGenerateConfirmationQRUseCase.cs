@@ -1,4 +1,5 @@
-﻿using Authentication._2FA.Application.DTOs.Response;
+﻿using Authentication._2FA.Application.DTOs.Request;
+using Authentication._2FA.Application.DTOs.Response;
 using Authentication._2FA.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Authentication._2FA.Application.Interfaces.UseCases
 {
-    public interface IGenerateConfirmationQRUseCase: IUseCase<int, GenerateConfirmationQRResponseDTO>
+    public interface IGenerateConfirmationQRUseCase: IUseCase<GenerateConfirmationQRRequestDTO, GenerateConfirmationQRResponseDTO>
     {
     }
 }

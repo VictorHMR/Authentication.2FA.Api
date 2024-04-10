@@ -1,0 +1,64 @@
+﻿using Authentication._2FA.Application.DTOs.Request;
+using Authentication._2FA.Application.DTOs.Response;
+using Authentication._2FA.Application.Interfaces.UseCases;
+using Authentication._2FA.Domain.Entities;
+using Authentication._2FA.Domain.Interfaces;
+using Authentication._2FA.Shared.Constants;
+using Authentication._2FA.Shared.Models;
+using Google.Authenticator;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static QRCoder.PayloadGenerator;
+
+namespace Authentication._2FA.Application.UseCases
+{
+    public class UserSigninUseCase : IUserSigninUseCase
+    {
+        private readonly TwoFactorAuthenticator _Tfa;
+        private readonly IConfiguration _Config;
+        private readonly IUserRepository _UserRepository;
+
+
+        public UserSigninUseCase(IConfiguration config, IUserRepository userRepository)
+        {
+            _Tfa = new TwoFactorAuthenticator();
+            _Config = config;
+            _UserRepository = userRepository;
+
+        }
+
+        public async Task<UseCaseResponse<MessageSuccessDTO>> Execute(UserSigninRequestDTO request)
+        {
+            var result = new UseCaseResponse<MessageSuccessDTO>();
+
+            try
+            {
+                var user = await _UserRepository.GetUserByEmailPassword(request.Email, HashMD5.HasPassword(request.Password));
+                if(user is null)
+                    return result.SetInternalServerError(ErrorMessages.WrongUserCredentials, ErrorCodes.WrongUserCredentials);
+                else if (request.Google2FA is not null)
+                {
+                    string key = _Config["Google:2FA_Key"].ToString();
+                    if (!_Tfa.ValidateTwoFactorPIN(key, request.Google2FA))
+                        return result.SetInternalServerError(ErrorMessages.WrongUserToken, ErrorCodes.WrongUserToken);
+
+                    await _UserRepository.SetLastValidation(user.Id);
+                }
+                else if (user.LastValidation is null || (DateTime.Now - user.LastValidation) >= TimeSpan.FromDays(30))
+                    return result.SetInternalServerError(ErrorMessages.UserValidationError, ErrorCodes.UserValidationError);
+
+                return result.SetSuccess(new MessageSuccessDTO("Logado com sucesso"));
+                //Futuramente implementar uma lógica para retornar um bearer token para acesso as funcionalidades.
+            }
+            catch (Exception ex)
+            {
+                return result.SetInternalServerError(ex.Message);
+            }
+        }
+
+    }
+}

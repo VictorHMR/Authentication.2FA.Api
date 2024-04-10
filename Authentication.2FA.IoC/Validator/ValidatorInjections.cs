@@ -11,6 +11,7 @@ namespace Authentication._2FA.IoC.Validator
         public static IServiceCollection AddValidator(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IValidator<CreateUserRequestDTO>, CreateUserValidations>();
+            services.AddScoped<IValidator<UserSigninRequestDTO>,UserSigninValidations>();
 
 
             return services;

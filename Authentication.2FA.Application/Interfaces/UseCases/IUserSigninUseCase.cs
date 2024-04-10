@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Authentication._2FA.Application.Interfaces.UseCases
 {
-    public interface IUserSigninUseCase: IUseCase<UserSigninRequestDTO, MessageSuccessDTO>
+    public interface IUserSigninUseCase: IUseCase<UserSigninRequestDTO, BearerTokenResponseDTO>
     {
     }
 }

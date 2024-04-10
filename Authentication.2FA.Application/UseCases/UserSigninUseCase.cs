@@ -7,9 +7,12 @@ using Authentication._2FA.Shared.Constants;
 using Authentication._2FA.Shared.Models;
 using Google.Authenticator;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using static QRCoder.PayloadGenerator;
@@ -31,9 +34,9 @@ namespace Authentication._2FA.Application.UseCases
 
         }
 
-        public async Task<UseCaseResponse<MessageSuccessDTO>> Execute(UserSigninRequestDTO request)
+        public async Task<UseCaseResponse<BearerTokenResponseDTO>> Execute(UserSigninRequestDTO request)
         {
-            var result = new UseCaseResponse<MessageSuccessDTO>();
+            var result = new UseCaseResponse<BearerTokenResponseDTO>();
 
             try
             {
@@ -51,13 +54,38 @@ namespace Authentication._2FA.Application.UseCases
                 else if (user.LastValidation is null || (DateTime.Now - user.LastValidation) >= TimeSpan.FromDays(30))
                     return result.SetInternalServerError(ErrorMessages.UserValidationError, ErrorCodes.UserValidationError);
 
-                return result.SetSuccess(new MessageSuccessDTO("Logado com sucesso"));
-                //Futuramente implementar uma lógica para retornar um bearer token para acesso as funcionalidades.
+                
+                return result.SetSuccess(BuildToken(user));
             }
             catch (Exception ex)
             {
                 return result.SetInternalServerError(ex.Message);
             }
+        }
+
+        public BearerTokenResponseDTO BuildToken(User user)
+        {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(JwtRegisteredClaimNames.UniqueName, user.Id.ToString()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+            var Jwtkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Config["JWT:key"]));
+
+            var creds = new SigningCredentials(Jwtkey, SecurityAlgorithms.HmacSha256);
+            var expiration = DateTime.UtcNow.AddHours(23);
+
+            JwtSecurityToken token = new JwtSecurityToken(
+               issuer: null,
+               audience: null,
+               claims: claims,
+               expires: expiration,
+               signingCredentials: creds);
+
+            return new BearerTokenResponseDTO()
+            {
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = expiration
+            };
         }
 
     }

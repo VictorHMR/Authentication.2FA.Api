@@ -15,13 +15,13 @@ namespace Authentication._2FA.UnitTests.UseCases
 {
     public class GenerateConfirmationQRUseCaseTests
     {
-        private readonly IValidator<GenerateConfirmationQRRequestDTO> _CreateUserValidator;
+        private readonly IValidator<GenerateConfirmationQRRequestDTO> _GenerateConfirmationQRValidator;
         private readonly Mock<IConfiguration> _ConfigMock;
         private readonly Mock<IUserRepository> _UserRepositoryMock;
 
         public GenerateConfirmationQRUseCaseTests()
         {
-            _CreateUserValidator = new GenerateConfirmationQRValidations();
+            _GenerateConfirmationQRValidator = new GenerateConfirmationQRValidations();
             _UserRepositoryMock = new Mock<IUserRepository>();
             _ConfigMock = new Mock<IConfiguration>();
         }
@@ -36,7 +36,7 @@ namespace Authentication._2FA.UnitTests.UseCases
                 Password = "teste"
             };
 
-            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _CreateUserValidator,_UserRepositoryMock.Object);
+            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator,_UserRepositoryMock.Object);
             _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync(new User(1, "teste", GenerateConfirmationQRRequest.Email, GenerateConfirmationQRRequest.Password, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
 
@@ -61,7 +61,7 @@ namespace Authentication._2FA.UnitTests.UseCases
                 Password = "teste"
             };
 
-            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _CreateUserValidator, _UserRepositoryMock.Object);
+            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator, _UserRepositoryMock.Object);
             _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync((User)null);
 
@@ -85,7 +85,7 @@ namespace Authentication._2FA.UnitTests.UseCases
                 Password = "teste"
             };
 
-            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _CreateUserValidator, _UserRepositoryMock.Object);
+            IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator, _UserRepositoryMock.Object);
             _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync((User)null);
 

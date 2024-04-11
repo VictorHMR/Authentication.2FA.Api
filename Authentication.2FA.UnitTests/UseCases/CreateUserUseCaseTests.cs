@@ -1,9 +1,12 @@
 ﻿using Authentication._2FA.Application.DTOs.Request;
+using Authentication._2FA.Application.DTOs.Response;
 using Authentication._2FA.Application.Interfaces.UseCases;
 using Authentication._2FA.Application.UseCases;
 using Authentication._2FA.Application.Validations;
 using Authentication._2FA.Domain.Entities;
 using Authentication._2FA.Domain.Interfaces;
+using Authentication._2FA.Shared.Enums;
+using Authentication._2FA.Shared.Models;
 
 namespace Authentication._2FA.UnitTests.CreateUser
 {
@@ -19,7 +22,7 @@ namespace Authentication._2FA.UnitTests.CreateUser
         }
 
         [Fact]
-        public async Task Given_CreateUserRequestDTO_When_IsInvalidCredentials_Then_ShouldReturnFalse()
+        public async Task Given_CreateUserRequestDTO_When_IsInvalidCredentials_Then_ShouldReturnErrors()
         {
             //Arrange
             CreateUserRequestDTO createUserRequest = new CreateUserRequestDTO()
@@ -35,12 +38,13 @@ namespace Authentication._2FA.UnitTests.CreateUser
             var response = await _CreateUserUseCase.Execute(createUserRequest);
 
             //Assert
-            response.Success().Should().BeFalse();
+            response.ErrorMessage.Should().NotBeNull();
+            response.Status.Should().NotBe(UseCaseResponseKind.Success);
             _UserRepositoryMock.Verify(r => r.Create(It.IsAny<User>()), Times.Never);
         }
 
         [Fact]
-        public async Task Given_CreateUserRequestDTO_When_IsValidCredentials_Then_ShouldReturnTrue()
+        public async Task Given_CreateUserRequestDTO_When_IsValidCredentials_Then_ShouldReturnSuccess()
         {
             //Arrange
             CreateUserRequestDTO createUserRequest = new CreateUserRequestDTO()
@@ -56,7 +60,9 @@ namespace Authentication._2FA.UnitTests.CreateUser
             var response = await _CreateUserUseCase.Execute(createUserRequest);
 
             //Assert
-            response.Success().Should().BeTrue();
+            response.Errors.Should().BeNull();
+            response.Should().BeOfType<UseCaseResponse<MessageSuccessDTO>>();
+            response.Status.Should().Be(UseCaseResponseKind.Success);
         }
     }
 }

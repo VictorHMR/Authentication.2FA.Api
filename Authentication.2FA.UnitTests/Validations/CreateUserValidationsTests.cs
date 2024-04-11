@@ -1,9 +1,7 @@
 using Authentication._2FA.Application.DTOs.Request;
 using Authentication._2FA.Application.Validations;
-using FluentAssertions;
-using FluentValidation;
 
-namespace Authentication._2FA.UnitTests
+namespace Authentication._2FA.UnitTests.Validations
 {
     public class CreateUserValidationsTests
     {

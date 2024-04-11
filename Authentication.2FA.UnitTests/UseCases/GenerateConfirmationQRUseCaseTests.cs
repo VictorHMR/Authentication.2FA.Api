@@ -27,7 +27,7 @@ namespace Authentication._2FA.UnitTests.UseCases
         }
 
         [Fact]
-        public async void Given_GenerateConfirmationQR_When_IsValidCredentials_And_UserExists_ShouldReturnGenerateConfirmationQRResponseDTO()
+        public async void Given_GenerateConfirmationQR_When_UserExists_ShouldReturnGenerateConfirmationQRResponseDTO()
         {
             //Arrange
             GenerateConfirmationQRRequestDTO GenerateConfirmationQRRequest = new GenerateConfirmationQRRequestDTO()
@@ -37,7 +37,7 @@ namespace Authentication._2FA.UnitTests.UseCases
             };
 
             IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator,_UserRepositoryMock.Object);
-            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
+            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("ffcb23a5-ee1b-44ca-a7a4-39298c9f7a84");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync(new User(1, "teste", GenerateConfirmationQRRequest.Email, GenerateConfirmationQRRequest.Password, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
 
             //Act
@@ -52,7 +52,7 @@ namespace Authentication._2FA.UnitTests.UseCases
         }
 
         [Fact]
-        public async void Given_GenerateConfirmationQR_When_IsNotValidCredntials_And_UserNotExists_ShouldReturnErrors()
+        public async void Given_GenerateConfirmationQR_When_IsNotValidCredntials_ShouldReturnErrors()
         {
             //Arrange
             GenerateConfirmationQRRequestDTO GenerateConfirmationQRRequest = new GenerateConfirmationQRRequestDTO()
@@ -62,7 +62,7 @@ namespace Authentication._2FA.UnitTests.UseCases
             };
 
             IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator, _UserRepositoryMock.Object);
-            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
+            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("ffcb23a5-ee1b-44ca-a7a4-39298c9f7a84");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync((User)null);
 
             //Act
@@ -76,7 +76,7 @@ namespace Authentication._2FA.UnitTests.UseCases
         }
 
         [Fact]
-        public async void Given_GenerateConfirmationQR_When_IsValidCredentials_And_UserNotExists_ShouldReturnErrors()
+        public async void Given_GenerateConfirmationQR_When_UserNotExists_ShouldReturnErrors()
         {
             //Arrange
             GenerateConfirmationQRRequestDTO GenerateConfirmationQRRequest = new GenerateConfirmationQRRequestDTO()
@@ -86,7 +86,7 @@ namespace Authentication._2FA.UnitTests.UseCases
             };
 
             IGenerateConfirmationQRUseCase _GenerateConfirmationQRUseCase = new GenerateConfirmationQRUseCase(_ConfigMock.Object, _GenerateConfirmationQRValidator, _UserRepositoryMock.Object);
-            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("keyusada para teste");
+            _ConfigMock.SetupGet(x => x["Google:2FA_Key"]).Returns("ffcb23a5-ee1b-44ca-a7a4-39298c9f7a84");
             _UserRepositoryMock.Setup(s => s.GetUserByEmailPassword(GenerateConfirmationQRRequest.Email, HashMD5.HasPassword(GenerateConfirmationQRRequest.Password))).ReturnsAsync((User)null);
 
             //Act

@@ -8,7 +8,7 @@ using Authentication._2FA.Domain.Interfaces;
 using Authentication._2FA.Shared.Enums;
 using Authentication._2FA.Shared.Models;
 
-namespace Authentication._2FA.UnitTests.CreateUser
+namespace Authentication._2FA.UnitTests.UseCases
 {
     public class CreateUserUseCaseTests
     {
@@ -64,5 +64,7 @@ namespace Authentication._2FA.UnitTests.CreateUser
             response.Should().BeOfType<UseCaseResponse<MessageSuccessDTO>>();
             response.Status.Should().Be(UseCaseResponseKind.Success);
         }
+
+
     }
 }

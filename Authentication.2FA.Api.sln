@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.2FA.Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.2FA.Domain", "Authentication.2FA.Domain\Authentication.2FA.Domain.csproj", "{597FB43F-4D28-4E25-AD69-8051B4E6F2F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.2FA.IoC", "Authentication.2FA.IoC\Authentication.2FA.IoC.csproj", "{7ED59FD2-663C-4573-B1DF-EE8D65E44212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.2FA.IoC", "Authentication.2FA.IoC\Authentication.2FA.IoC.csproj", "{7ED59FD2-663C-4573-B1DF-EE8D65E44212}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.2FA.Shared", "Authentication.2FA.Shared\Authentication.2FA.Shared.csproj", "{EC1BD4AC-70E4-4757-A2BC-8B256B1600FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.2FA.Shared", "Authentication.2FA.Shared\Authentication.2FA.Shared.csproj", "{EC1BD4AC-70E4-4757-A2BC-8B256B1600FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.2FA.UnitTests", "Authentication.2FA.UnitTests\Authentication.2FA.UnitTests.csproj", "{5C904286-3E41-4572-B105-F2D321538754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{EC1BD4AC-70E4-4757-A2BC-8B256B1600FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1BD4AC-70E4-4757-A2BC-8B256B1600FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC1BD4AC-70E4-4757-A2BC-8B256B1600FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C904286-3E41-4572-B105-F2D321538754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C904286-3E41-4572-B105-F2D321538754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C904286-3E41-4572-B105-F2D321538754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C904286-3E41-4572-B105-F2D321538754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

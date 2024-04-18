@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Authentication.2FA.Shared\Authentication.2FA.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

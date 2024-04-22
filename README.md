@@ -1,6 +1,6 @@
 # Authentication.2FA
 
-Esta é uma API desenvolvida em .NET Core utilizando base de dados MySql que oferece recursos de autenticação usando JWT e autenticação de dois fatores (2FA) com o Google Authenticator. A arquitetura da API segue o padrão Onion Architecture, garantindo uma separação clara das preocupações e facilitando a manutenção e extensibilidade do código.
+Esta é uma API desenvolvida em .NET Core utilizando base de dados MySql que oferece recursos de autenticação usando JWT e autenticação de dois fatores (2FA) com o Google Authenticator. A arquitetura da API segue o padrão Onion Architecture, garantindo uma separação clara das preocupações e facilitando a manutenção e extensibilidade do código, além disso foi utilizado testes unitários com xUnit para garantir maior integridade das funcionalidades.
 
 ## Configuração do Ambiente
 

@@ -28,6 +28,6 @@ A API estará acessível em `http://localhost:5000` por padrão.
 A API expõe os seguintes endpoints:
 
 - `/api/User/CreateUser`: Endpoint para criação de usuários.
-- `/api/User/GenerateConfirmationQR`: Endpoint para verificar o código de autenticação de dois fatores.
+- `/api/User/GenerateConfirmationQR`: Endpoint para geração do QRCode que deve ser escaneado usando o aplicativo Google Authentication.
 - `/api/User/UserSignin`: Endpoint para realizar o login e obter o código JWT.
 
